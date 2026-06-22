@@ -1,0 +1,1 @@
+{"StartTimeUtc":"2026-06-22T08:10:16.3800806Z","EndTimeUtc":"2026-06-22T08:10:17.6883308Z","Status":"Completed","Name":"Vider le r\u00E9pertoire cache","Key":"DeleteCacheFiles","Id":"241d4fcb19a1d557ee62428e411da609"}

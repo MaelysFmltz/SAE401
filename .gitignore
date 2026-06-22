@@ -1,0 +1,26 @@
+# Base de données
+db/data/
+
+# Jellyfin
+vod/cache/
+vod/media/
+
+# IPTV
+iptv/media/
+
+# Mail
+mail/state/
+
+# Logs
+*.log
+
+# Sauvegardes
+*.tar.gz
+
+# Temp
+*.tmp
+*.bak
+
+# Python
+__pycache__/
+*.pyc

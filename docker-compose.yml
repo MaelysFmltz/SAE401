@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+
+  apache:
+    image: php:8.2-apache
+    container_name: apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./apache/php:/var/www/html
+    restart: unless-stopped
+
+  db:
+    image: mariadb:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: lmc
+      MYSQL_DATABASE: saecoef61
+      MYSQL_USER: lmc
+      MYSQL_PASSWORD: lmc
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+    restart: unless-stopped
+
+  vod:
+    image: jellyfin/jellyfin
+    container_name: vod
+    ports:
+      - "8096:8096"
+    volumes:
+      - ./vod/config:/config
+      - ./vod/cache:/cache
+      - ./vod/media:/media
+    restart: unless-stopped
+
+  mail:
+    image: mailserver/docker-mailserver:latest
+    container_name: mail
+    hostname: mail
+    domainname: saecoef61.local
+    ports:
+      - "25:25"
+      - "143:143"
+    volumes:
+      - ./mail/data:/var/mail
+      - ./mail/state:/var/mail-state
+      - ./mail/logs:/var/log/mail
+    restart: unless-stopped
+
+
+
+
+  asterisk:
+    image: andrius/asterisk
+    container_name: asterisk
+
+    ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "10000-10100:10000-10100/udp"
+
+    volumes:
+      - ./asterisk/config/pjsip.conf:/etc/asterisk/pjsip.conf
+      - ./asterisk/config/extensions.conf:/etc/asterisk/extensions.conf
+
+    restart: unless-stopped
+
+
+
+  iptv:
+    image: jrottenberg/ffmpeg
+    container_name: iptv
+    command: >
+      -re -stream_loop -1
+      -i /media/death.mp4
+      -c copy
+      -f mpegts
+      udp://0.0.0.0:1234
+    volumes:
+      - ./iptv/media:/media
+    restart: unless-stopped
+

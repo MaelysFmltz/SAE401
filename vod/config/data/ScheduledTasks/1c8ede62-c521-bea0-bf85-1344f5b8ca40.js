@@ -1,0 +1,1 @@
+{"StartTimeUtc":"2026-06-22T08:10:19.826516Z","EndTimeUtc":"2026-06-22T08:10:19.9678999Z","Status":"Completed","Name":"Nettoyer le r\u00E9pertoire des journaux","Key":"CleanLogFiles","Id":"1c8ede62c521bea0bf851344f5b8ca40"}
