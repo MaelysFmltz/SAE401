@@ -17,6 +17,7 @@ services:
       - ./data:/var/mail
       - ./state:/var/mail-state
       - ./logs:/var/log/mail
+      - ./config:/tmp/docker-mailserver
 
     environment:
       - ENABLE_SPAMASSASSIN=0

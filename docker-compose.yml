@@ -10,6 +10,9 @@ services:
     volumes:
       - ./apache/php:/var/www/html
     restart: unless-stopped
+    networks:
+      data_net:
+        ipv4_address: 192.168.20.10
 
   db:
     image: mariadb:latest
@@ -24,6 +27,9 @@ services:
     volumes:
       - ./db/data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      data_net:
+        ipv4_address: 192.168.20.30
 
   vod:
     image: jellyfin/jellyfin
@@ -35,6 +41,9 @@ services:
       - ./vod/cache:/cache
       - ./vod/media:/media
     restart: unless-stopped
+    networks:
+      voixvideo_net:
+        ipv4_address: 192.168.10.30
 
   mail:
     image: mailserver/docker-mailserver:latest
@@ -49,26 +58,38 @@ services:
       - ./mail/state:/var/mail-state
       - ./mail/logs:/var/log/mail
     restart: unless-stopped
+    networks:
+      data_net:
+        ipv4_address: 192.168.20.20
 
-
-
+  dns:
+    image: ubuntu/bind9
+    container_name: dns
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - ./dns/config/named.conf.local:/etc/bind/named.conf.local
+      - ./dns/zones:/etc/bind/zones
+    restart: unless-stopped
+    networks:
+      data_net:
+        ipv4_address: 192.168.20.40
 
   asterisk:
     image: andrius/asterisk
     container_name: asterisk
-
     ports:
       - "5060:5060/udp"
       - "5060:5060/tcp"
       - "10000-10100:10000-10100/udp"
-
     volumes:
       - ./asterisk/config/pjsip.conf:/etc/asterisk/pjsip.conf
       - ./asterisk/config/extensions.conf:/etc/asterisk/extensions.conf
-
     restart: unless-stopped
-
-
+    networks:
+      voixvideo_net:
+        ipv4_address: 192.168.10.10
 
   iptv:
     image: jrottenberg/ffmpeg
@@ -82,4 +103,15 @@ services:
     volumes:
       - ./iptv/media:/media
     restart: unless-stopped
+    networks:
+      voixvideo_net:
+        ipv4_address: 192.168.10.20
+
+networks:
+  voixvideo_net:
+    external: true
+
+  data_net:
+    external: true
+
 
