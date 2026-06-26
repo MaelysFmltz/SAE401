@@ -1,0 +1,218 @@
+IOU2#sh running-config 
+Building configuration...
+
+  
+Current configuration : 2517 bytes
+!
+version 15.7
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname IOU2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$VmYU$six64Qi7K0CRqvHJAAJMG0
+!
+no aaa new-model
+!
+!
+!
+clock timezone CET 1 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!         
+no ip domain lookup
+ip domain name lab.local
+ip multicast-routing 
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$ZX9l$NrwBktJe.D9wQJERzP8nU.
+!
+redundancy
+!
+no cdp log mismatch duplex
+!
+ip tcp synwait-time 5
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+!
+interface Ethernet0/0
+ description MANAGEMENT
+ ip address 172.16.0.12 255.255.255.0
+ duplex auto
+!
+interface Ethernet0/1
+ description IOU3
+ ip address 10.2.3.1 255.255.255.252
+ ip pim sparse-mode
+ duplex auto
+!
+interface Ethernet0/2
+ description IOU1
+ ip address 10.1.2.2 255.255.255.252
+ ip pim sparse-mode
+ duplex auto
+!
+interface Ethernet0/3
+ description IOU4
+ ip address 10.2.4.1 255.255.255.252
+ ip pim sparse-mode
+ duplex auto
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex auto
+!         
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/1
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/2
+ no ip address
+ shutdown 
+ duplex auto
+!
+interface Ethernet3/3
+ no ip address
+ shutdown
+ duplex auto
+!
+router ospf 1
+ router-id 2.2.2.2
+ network 2.2.2.2 0.0.0.0 area 0
+ network 10.1.2.0 0.0.0.3 area 0
+ network 10.2.3.0 0.0.0.3 area 0
+ network 10.2.4.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip pim rp-address 1.1.1.1
+ip ssh time-out 60
+ip ssh version 2
+!         
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
+
+IOU2#
+

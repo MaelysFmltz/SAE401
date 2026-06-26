@@ -1,0 +1,183 @@
+IOU9#sh running-config 
+Building configuration...
+
+Current configuration : 2786 bytes
+!
+! Last configuration change at 10:25:58 CET Fri Jun 26 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname IOU9
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
+logging buffered 50000
+logging console discriminator EXCESS
+enable secret 5 $1$n/68$UXvmiVHKuPP/1z4Qn81zY.
+!
+username admin privilege 15 secret 5 $1$rUz5$1Th4sscwLnaZk/0py0pdO0
+no aaa new-model
+clock timezone CET 1 0
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+ip multicast-routing 
+!
+!
+no ip domain-lookup
+ip domain-name lab.local
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 9.9.9.9 255.255.255.255
+!
+interface Ethernet0/0
+ description CLOUD ANSIBLE
+ switchport access vlan 99
+ switchport mode access
+!
+interface Ethernet0/1
+ description VM Services
+ switchport trunk allowed vlan 10,20,99
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ description IOU1
+ no switchport
+ ip address 10.1.9.1 255.255.255.252
+ ip pim sparse-mode
+!
+interface Ethernet0/3
+!
+interface Ethernet1/0
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+!
+interface Ethernet2/1
+!         
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+interface Ethernet5/0
+!
+interface Ethernet5/1
+!
+interface Ethernet5/2
+!
+interface Ethernet5/3
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 192.168.10.1 255.255.255.0
+ ip pim sparse-mode
+!
+interface Vlan20
+ ip address 192.168.20.1 255.255.255.0
+ ip pim sparse-mode
+!
+interface Vlan99
+ ip address 172.16.0.19 255.255.255.0
+!
+router ospf 1
+ router-id 9.9.9.9
+ network 9.9.9.9 0.0.0.0 area 0
+ network 10.1.9.0 0.0.0.3 area 0
+ network 172.16.0.0 0.0.0.255 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+ip pim rp-address 1.1.1.1
+ip tcp synwait-time 5
+ip http server
+!
+ip route 0.0.0.0 0.0.0.0 10.1.9.2
+ip route 100.64.0.0 255.192.0.0 192.168.99.2
+ip ssh time-out 60
+ip ssh version 2
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!         
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+!
+end
+

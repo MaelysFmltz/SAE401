@@ -1,0 +1,251 @@
+IOU7#sh run
+Building configuration...
+
+  
+Current configuration : 3481 bytes
+!
+! Last configuration change at 11:09:32 CET Fri Jun 26 2026 by admin
+!
+version 15.7
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname IOU7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$rNDp$0yP48u8kRoIihLK5U/pOr1
+!
+no aaa new-model
+!
+!
+!
+clock timezone CET 1 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!         
+!
+!
+no ip domain lookup
+ip domain name lab.local
+ip multicast-routing 
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$eksx$.4OTGoPRAlf96gG8Yie2a0
+!
+redundancy
+!
+no cdp log mismatch duplex
+!
+ip tcp synwait-time 5
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+crypto isakmp key DMVPN_SECRET address 0.0.0.0        
+!
+!
+crypto ipsec transform-set TS-DMVPN esp-aes 256 esp-sha-hmac 
+ mode transport
+!
+crypto ipsec profile PROF-DMVPN
+ set transform-set TS-DMVPN 
+!
+!
+!         
+!
+!
+!
+!
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+!
+interface Tunnel100
+ description DMVPN-SPOKE-IOU7
+ ip address 172.30.0.7 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip pim sparse-mode
+ ip nhrp map 172.30.0.1 10.1.2.1
+ ip nhrp map multicast 10.1.2.1
+ ip nhrp network-id 100
+ ip nhrp nhs 172.30.0.1
+ ip tcp adjust-mss 1360
+ tunnel source 10.5.7.2
+ tunnel mode gre multipoint
+ tunnel key 100
+ tunnel protection ipsec profile PROF-DMVPN
+!         
+interface Ethernet0/0
+ description MANAGEMENT
+ ip address 172.16.0.17 255.255.255.0
+ duplex auto
+!
+interface Ethernet0/1
+ description Switch2
+ ip address 192.168.2.2 255.255.255.0
+ ip pim sparse-mode
+ duplex auto
+!
+interface Ethernet0/2
+ description IOU5
+ ip address 10.5.7.2 255.255.255.252
+ ip pim sparse-mode
+ duplex auto
+!
+interface Ethernet0/3
+ description IOU6
+ ip address 10.6.7.2 255.255.255.252
+ ip pim sparse-mode
+ duplex auto
+!         
+interface Ethernet1/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/0
+ no ip address
+ shutdown 
+ duplex auto
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/0
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/1
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/2
+ no ip address
+ shutdown
+ duplex auto
+!
+interface Ethernet3/3
+ no ip address
+ shutdown
+ duplex auto
+!
+router ospf 1
+ router-id 7.7.7.7
+ network 7.7.7.7 0.0.0.0 area 0
+ network 10.5.7.0 0.0.0.3 area 0
+ network 10.6.7.0 0.0.0.3 area 0
+ network 10.22.7.0 0.0.0.3 area 0
+ network 192.168.2.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip pim rp-address 1.1.1.1
+ip route 0.0.0.0 0.0.0.0 192.168.2.0
+ip route 192.168.3.0 255.255.255.0 172.30.0.8
+ip route 192.168.10.0 255.255.255.0 172.30.0.1
+ip route 192.168.20.0 255.255.255.0 172.30.0.1
+ip ssh time-out 60
+ip ssh version 2
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!         
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
+
