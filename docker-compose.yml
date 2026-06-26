@@ -50,14 +50,26 @@ services:
     container_name: mail
     hostname: mail
     domainname: saecoef61.local
+
+    environment:
+      - ENABLE_SPAMASSASSIN=0
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=0
+      - ONE_DIR=1
+
     ports:
       - "25:25"
       - "143:143"
+      - "587:587"
+
     volumes:
       - ./mail/data:/var/mail
       - ./mail/state:/var/mail-state
       - ./mail/logs:/var/log/mail
+      - ./mail/config:/tmp/docker-mailserver
+
     restart: unless-stopped
+
     networks:
       data_net:
         ipv4_address: 192.168.20.20
@@ -94,14 +106,23 @@ services:
   iptv:
     image: jrottenberg/ffmpeg
     container_name: iptv
-    command: >
-      -re -stream_loop -1
-      -i /media/death.mp4
-      -c copy
-      -f mpegts
-      udp://0.0.0.0:1234
+    entrypoint: ["/bin/sh","/stream.sh"]
+    environment:
+      - MULTICAST_IP=239.1.1.1
+      - MULTICAST_PORT=5000
+      - TTL=64
+      - LOCALADDR=192.168.10.20
+
+    #command:
+     # - -c
+      #- |
+       #   ffmpeg -re -stream_loop -1 -i /media/death.mp4 -c copy -f mpegts udp://239.1.1.1:5000 &
+        #  ffmpeg -re -stream_loop -1 -i /media/rick.mp4 -c copy -f mpegts udp://239.1.1.2:5000
+         # wait
+
     volumes:
-      - ./iptv/media:/media
+       - ./iptv/media:/media
+       - ./iptv/stream.sh:/stream.sh
     restart: unless-stopped
     networks:
       voixvideo_net:
@@ -113,5 +134,4 @@ networks:
 
   data_net:
     external: true
-
 

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  iptv:
+    image: jrottenberg/ffmpeg
+    container_name: iptv
+    volumes:
+      - ./media:/video
+      - ./stream.sh:/stream.sh
+    entrypoint: ["/bin/sh", "/stream.sh"]
+    environment:
+      - MULTICAST_IP=239.1.1.1
+      - MULTICAST_PORT=5000
+      - TTL=64
+      - LOCALADDR=192.168.10.20
+    networks:
+      - voixvideo_net
+
+networks:
+  voixvideo_net:
+    external: true

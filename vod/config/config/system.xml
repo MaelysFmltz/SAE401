@@ -9,8 +9,8 @@
   <EnableCaseSensitiveItemIds>true</EnableCaseSensitiveItemIds>
   <DisableLiveTvChannelUserDataName>true</DisableLiveTvChannelUserDataName>
   <MetadataPath />
-  <PreferredMetadataLanguage>en</PreferredMetadataLanguage>
-  <MetadataCountryCode>US</MetadataCountryCode>
+  <PreferredMetadataLanguage>fr</PreferredMetadataLanguage>
+  <MetadataCountryCode>FR</MetadataCountryCode>
   <SortReplaceCharacters>
     <string>.</string>
     <string>+</string>

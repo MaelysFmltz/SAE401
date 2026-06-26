@@ -1,1 +1,1 @@
-{"StartTimeUtc":"2026-06-24T12:05:16.8260092Z","EndTimeUtc":"2026-06-24T12:05:38.486038Z","Status":"Completed","Name":"Mettre \u00E0 jour les extensions","Key":"PluginUpdates","Id":"f9b057c054e9e6daee4a88ffd146a403"}
+{"StartTimeUtc":"2026-06-26T12:00:39.9491063Z","EndTimeUtc":"2026-06-26T12:01:01.2728033Z","Status":"Completed","Name":"Mettre \u00E0 jour les extensions","Key":"PluginUpdates","Id":"f9b057c054e9e6daee4a88ffd146a403"}

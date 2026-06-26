@@ -1,0 +1,27 @@
+Return-Path: <client1@saecoef61.local>
+Delivered-To: client2@saecoef61.local
+Received: from mail.saecoef61.local
+	by mail.saecoef61.local with LMTP
+	id 6Hh8MUEiPWrpDAAAEdKuVw
+	(envelope-from <client1@saecoef61.local>)
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 12:42:41 +0000
+Received: from localhost (localhost [127.0.0.1])
+	by mail.saecoef61.local (Postfix) with ESMTP id C3154A9611
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 12:42:41 +0000 (UTC)
+Authentication-Results: mail.saecoef61.local; dmarc=none (p=none dis=none) header.from=saecoef61.local
+Received-SPF: Temperror (mailfrom) identity=mailfrom; client-ip=192.168.2.1; helo=[192.168.2.1]; envelope-from=client1@saecoef61.local; receiver=saecoef61.local 
+Received: from [192.168.2.1] (unknown [192.168.2.1])
+	by mail.saecoef61.local (Postfix) with ESMTP id AF29BA9619
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 12:41:33 +0000 (UTC)
+Message-ID: <8a8d02e3-9805-44fc-99e1-d7e8f6dd3de2@saecoef61.local>
+Date: Thu, 25 Jun 2026 14:41:29 +0200
+MIME-Version: 1.0
+Content-Language: en-US
+To: client2@saecoef61.local
+From: client1 <client1@saecoef61.local>
+Subject: retest
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+blqblqblq
+

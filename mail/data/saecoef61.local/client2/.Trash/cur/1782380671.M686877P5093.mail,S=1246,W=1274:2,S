@@ -1,0 +1,28 @@
+Return-Path: <client1@saecoef61.local>
+Delivered-To: client2@saecoef61.local
+Received: from mail.saecoef61.local
+	by mail.saecoef61.local with LMTP
+	id KVWwJ3/4PGrlEwAAEdKuVw
+	(envelope-from <client1@saecoef61.local>)
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 09:44:31 +0000
+Received: from localhost (localhost [127.0.0.1])
+	by mail.saecoef61.local (Postfix) with ESMTP id 84912A95E8
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 09:44:31 +0000 (UTC)
+Authentication-Results: mail.saecoef61.local; dmarc=none (p=none dis=none) header.from=saecoef61.local
+Received-SPF: Temperror (mailfrom) identity=mailfrom; client-ip=192.168.2.1; helo=[192.168.2.1]; envelope-from=client1@saecoef61.local; receiver=saecoef61.local 
+Received: from [192.168.2.1] (unknown [192.168.2.1])
+	by mail.saecoef61.local (Postfix) with ESMTP id B2945A95C5
+	for <client2@saecoef61.local>; Thu, 25 Jun 2026 09:43:28 +0000 (UTC)
+Message-ID: <e5305afd-7a27-4a63-ae5e-4c19345eef95@saecoef61.local>
+Date: Thu, 25 Jun 2026 11:42:54 +0200
+MIME-Version: 1.0
+Content-Language: en-US
+To: client2@saecoef61.local
+From: client1 <client1@saecoef61.local>
+Subject: teeeeeeeesteuh
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+euuhhh_
+
+
