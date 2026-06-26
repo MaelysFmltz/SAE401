@@ -1,4 +1,0 @@
-zone "saecoef61.local" {
-    type master;
-    file "/etc/bind/zones/db.saecoef61.local";
-};
