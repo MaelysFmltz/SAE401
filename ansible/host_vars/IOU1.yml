@@ -1,0 +1,26 @@
+---
+dmvpn_role: hub
+dmvpn_tunnel_ip: 172.30.0.1
+dmvpn_source_ip: 10.1.2.1
+ospf_router_id: 1.1.1.1
+
+# Routes statiques nécessaires côté hub
+static_routes:
+  # Réseaux clients via les spokes DMVPN
+  - network: 192.168.2.0
+    mask: 255.255.255.0
+    next_hop: 172.30.0.7
+  - network: 192.168.3.0
+    mask: 255.255.255.0
+    next_hop: 172.30.0.8
+
+  # Réseaux services derrière IOU9
+  - network: 192.168.10.0
+    mask: 255.255.255.0
+    next_hop: 10.1.9.1
+  - network: 192.168.20.0
+    mask: 255.255.255.0
+    next_hop: 10.1.9.1
+
+ospf_networks:
+  - "172.30.0.0 0.0.0.255 area 0"

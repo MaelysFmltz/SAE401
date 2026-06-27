@@ -1,0 +1,19 @@
+---
+- name: Déployer DMVPN + IPsec sur IOU1, IOU7 et IOU8
+  hosts: dmvpn
+  gather_facts: false
+
+  tasks:
+    - name: Générer la configuration DMVPN/IPsec depuis le template
+      ansible.builtin.template:
+        src: ../templates/dmvpn_ipsec.j2
+        dest: /tmp/{{ inventory_hostname }}_dmvpn_ipsec.cfg
+
+    - name: Afficher la configuration générée
+      ansible.builtin.debug:
+        msg: "{{ lookup('file', '/tmp/' + inventory_hostname + '_dmvpn_ipsec.cfg') }}"
+
+    - name: Appliquer la configuration DMVPN/IPsec
+      cisco.ios.ios_config:
+        src: /tmp/{{ inventory_hostname }}_dmvpn_ipsec.cfg
+        save_when: modified

@@ -1,0 +1,24 @@
+---
+dmvpn_role: spoke
+dmvpn_tunnel_ip: 172.30.0.7
+dmvpn_source_ip: 10.5.7.2
+ospf_router_id: 7.7.7.7
+
+# Routes statiques côté client 1
+static_routes:
+  # Réseaux services via le hub
+  - network: 192.168.10.0
+    mask: 255.255.255.0
+    next_hop: 172.30.0.1
+  - network: 192.168.20.0
+    mask: 255.255.255.0
+    next_hop: 172.30.0.1
+
+  # Client 2 via DMVPN
+  - network: 192.168.3.0
+    mask: 255.255.255.0
+    next_hop: 172.30.0.8
+
+ospf_networks:
+  - "172.30.0.0 0.0.0.255 area 0"
+  - "192.168.2.0 0.0.0.255 area 0"

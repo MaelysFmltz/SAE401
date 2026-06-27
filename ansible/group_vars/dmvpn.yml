@@ -1,0 +1,32 @@
+---
+# Paramètres communs DMVPN/IPsec
+dmvpn_tunnel_interface: Tunnel100
+dmvpn_network_id: 100
+dmvpn_auth: DMVPN_AUTH
+dmvpn_psk: DMVPN_SECRET
+
+# Réseau logique du tunnel DMVPN
+dmvpn_tunnel_mask: 255.255.255.0
+
+# Hub DMVPN IOU1
+dmvpn_hub_tunnel_ip: 172.30.0.1
+dmvpn_hub_nbma_ip: 10.1.2.1
+
+# IPsec
+ipsec_isakmp_policy: 10
+ipsec_encryption: aes 256
+ipsec_hash: sha256
+ipsec_group: 14
+ipsec_lifetime: 86400
+ipsec_transform_set: TS-DMVPN
+ipsec_profile: PROF-DMVPN
+
+# OSPF optionnel
+ospf_process: 10
+
+# Mets false si ton image IOU ne supporte pas les commandes crypto
+enable_ipsec: true
+
+# Mets true pour activer OSPF sur Tunnel0
+# Sinon le playbook poussera les routes statiques définies dans host_vars.
+enable_ospf: false

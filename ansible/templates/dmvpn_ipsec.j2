@@ -1,0 +1,65 @@
+ip cef
+!
+ip multicast-routing
+ip pim rp-address 1.1.1.1
+!
+{% if enable_ipsec %}
+crypto isakmp policy {{ ipsec_isakmp_policy }}
+ encryption {{ ipsec_encryption }}
+ hash {{ ipsec_hash }}
+ authentication pre-share
+ group {{ ipsec_group }}
+ lifetime {{ ipsec_lifetime }}
+!
+crypto isakmp key {{ dmvpn_psk }} address 0.0.0.0 0.0.0.0
+!
+crypto ipsec transform-set {{ ipsec_transform_set }} esp-aes 256 esp-sha-hmac
+ mode transport
+!
+crypto ipsec profile {{ ipsec_profile }}
+ set transform-set {{ ipsec_transform_set }}
+!
+{% endif %}
+interface {{ dmvpn_tunnel_interface }}
+ description DMVPN-{{ dmvpn_role | upper }}-{{ inventory_hostname }}
+ ip address {{ dmvpn_tunnel_ip }} {{ dmvpn_tunnel_mask }}
+ no ip redirects
+ ip mtu 1400
+ ip pim sparse-mode
+ ip nhrp authentication {{ dmvpn_auth }}
+{% if dmvpn_role == "hub" %}
+ ip nhrp map multicast dynamic
+{% else %}
+ ip nhrp map {{ dmvpn_hub_tunnel_ip }} {{ dmvpn_hub_nbma_ip }}
+ ip nhrp map multicast {{ dmvpn_hub_nbma_ip }}
+ ip nhrp nhs {{ dmvpn_hub_tunnel_ip }}
+{% endif %}
+ ip nhrp network-id {{ dmvpn_network_id }}
+ ip tcp adjust-mss 1360
+ tunnel source {{ dmvpn_source_ip }}
+ tunnel mode gre multipoint
+ tunnel key {{ dmvpn_network_id }}
+{% if enable_ipsec %}
+ tunnel protection ipsec profile {{ ipsec_profile }}
+{% endif %}
+ no shutdown
+!
+{% if enable_ospf %}
+router ospf {{ ospf_process }}
+ router-id {{ ospf_router_id }}
+{% for net in ospf_networks %}
+ network {{ net }}
+{% endfor %}
+!
+interface {{ dmvpn_tunnel_interface }}
+ ip ospf network broadcast
+{% if dmvpn_role == "hub" %}
+ ip ospf priority 255
+{% else %}
+ ip ospf priority 0
+{% endif %}
+{% else %}
+{% for route in static_routes %}
+ip route {{ route.network }} {{ route.mask }} {{ route.next_hop }}
+{% endfor %}
+{% endif %}

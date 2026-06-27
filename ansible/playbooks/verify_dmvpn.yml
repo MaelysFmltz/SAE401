@@ -1,0 +1,31 @@
+---
+- name: Vérifier DMVPN/IPsec
+  hosts: dmvpn
+  gather_facts: false
+
+  tasks:
+    - name: show dmvpn
+      cisco.ios.ios_command:
+        commands:
+          - show dmvpn
+          - show ip nhrp
+          - show interface Tunnel0
+          - show ip route
+      register: dmvpn_output
+
+    - name: Afficher les vérifications DMVPN
+      ansible.builtin.debug:
+        var: dmvpn_output.stdout_lines
+
+    - name: Vérifier IPsec si activé
+      cisco.ios.ios_command:
+        commands:
+          - show crypto isakmp sa
+          - show crypto ipsec sa
+      register: ipsec_output
+      when: enable_ipsec | bool
+
+    - name: Afficher les vérifications IPsec
+      ansible.builtin.debug:
+        var: ipsec_output.stdout_lines
+      when: enable_ipsec | bool
